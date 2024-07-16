@@ -95,6 +95,10 @@ sub download_file($self) {
     $user->update( { publickey => $public_key } );
     my $config   = $self->config;
     my $ip       = $user->ip_to_text;
+    my ($publickey) = capture_stdout sub {
+        open my $fh, '|-', 'wg', 'pubkey';
+        print $fh $config->{vpn}{privkey};
+    };
     my $vpn_file = <<"EOF";
 [Interface]
 PrivateKey = $private_key
@@ -102,7 +106,7 @@ Address = $ip/32
 DNS = @{[$config->{vpn}{host}]}
 
 [Peer]
-PublicKey = @{[$config->{vpn}{privkey}]}
+PublicKey = $publickey
 AllowedIPs = @{[$config->{vpnclients}{allowedips}]}
 Endpoint = @{[$config->{vpnclients}{endpoint}]}:@{[$config->{vpnclients}{server_port}]}
 EOF
