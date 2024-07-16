@@ -86,6 +86,9 @@ sub download_file($self) {
     if ( !defined $user ) {
         return $self->render( text => 'No such user', status => 400 );
     }
+    if ($user->is_protected) {
+        return $self->render( text => 'This user is protected', status => 400 );
+    }
     my $private_key = `wg genkey`;
     my $public_key  = capture_stdout sub {
         open my $fh, '|-', 'wg', 'pubkey';
