@@ -35,7 +35,7 @@ sub install_if_new {
         say 'Writting new file';
         open $fh, '>', $output_file;
         print $fh $contents;
-        system 'systemctl', 'restart', 'vpnmanager';
+        system 'systemctl', 'restart', 'wg-quick@wg0';
         return;
     }
     say 'Files equal';
