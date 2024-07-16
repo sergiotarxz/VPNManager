@@ -1,0 +1,10 @@
+% use MIME::Base64 qw/encode_base64/;
+% my $file = stash 'vpn_file';
+<html>
+    <head>
+        <link rel="stylesheet" href="/style.css"/>
+    </head>
+    <body>
+        <a href="/vpn/user/<%=$user->id%>/download" download="wg0.conf">Dowload vpn file</a>
+    </body>
+</html>

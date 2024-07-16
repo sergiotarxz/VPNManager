@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/style.css"/>
+    </head>
+    <body class="create-user">
+        <form action="/vpn/create-user" method="post"> 
+            <div>
+                <label for="name">Name</label>
+                <input name="name"/>     
+            </div>
+            <input type="submit" value="Submit"/> 
+        </form> 
+    </body>
+</html>

@@ -1,0 +1,28 @@
+#!/usr/bin/env perl
+use Module::Build;
+
+my $home = $ENV{HOME};
+
+my $build = Module::Build->new(
+    module_name   => 'VPNManager',
+    license       => 'AGPLv3',
+    dist_author   => 'Sergio Iglesias <contact@owlcode.tech>',
+    dist_abstract => 'Manage Wireguard.',
+    requires      => {
+        'DBI'            => 0,
+        'DBD::SQLite'    => 0,
+        'Path::Tiny'     => 0,
+        'DBIx::Class'    => 0,
+        'Mojolicious'    => 0,
+        'Moo'            => 0,
+        'Crypt::Bcrypt'  => 0,
+        'Crypt::URandom' => 0,
+        'Capture::Tiny'  => 0,
+    },
+    test_requires => {
+        'Test::MockModule' => 0,
+        'Test::Most'       => 0,
+        'Test::MockObject' => 0,
+    }
+);
+$build->create_build_script;

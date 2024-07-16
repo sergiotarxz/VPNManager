@@ -1,0 +1,16 @@
+---
+secrets:
+  - generated_secret
+vpn:
+  host: '192.168.2.1'
+  submask: 24
+  privkey: 'your_private_key'
+  listenport: 51820
+  mtu: 1420
+  endpoint: 'your_endpoint'
+vpnclients:
+  submask: 32
+  allowedips: '192.168.2.0/24'
+  endpoint: 'your_endpoint'
+  server_port: 51820
+  starting_ip: '192.168.2.2'

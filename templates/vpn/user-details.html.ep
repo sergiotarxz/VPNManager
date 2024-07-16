@@ -1,0 +1,16 @@
+% use MIME::Base64 qw/encode_base64/;
+% my $user = stash 'details_user';
+<html>
+    <head>
+        <link rel="stylesheet" href="/style.css"/>
+    </head>
+    <body>
+        <h1>VPN Account</h1>
+        <h2>Name: <%=$user->name%></h2>
+        <h2>Internal IP Address: <%=$user->ip_to_text%></h2>
+        <form action="/vpn/user/<%=$user->id%>/download" target="_blank" method="post">
+            <input type="submit" value="Download new VPN file"/>
+        </form>
+        <p><a href="/">Volver al menu principal</a></p>
+    </body>
+</html>
