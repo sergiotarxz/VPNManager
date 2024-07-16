@@ -48,7 +48,7 @@ sub _db_path($class) {
     }
     $db_path .= '.vpnmanager/db.sqlite';
     path($db_path)->parent->mkpath;
-    system 'chmod', '-v', '700', path($db_path)->parent;
+    system 'chmod', '700', path($db_path)->parent;
     return $db_path;
 }
 
