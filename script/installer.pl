@@ -13,7 +13,8 @@ if ($> != 0) {
 
 while (1) {
     eval {
-        install_if_new();
+#        install_if_new_wireguard();
+        install_if_new_whitelist();
         sleep 15;
     };
     if ($@) {
@@ -21,22 +22,30 @@ while (1) {
     }
 }
 
-sub install_if_new {
-    my $script_get_wg_config = abs_path(dirname(__FILE__).'/get_wg_config.pl');
-    my $user = 'vpnmanager';
-    open my $fh, '-|', 'sudo', '-i', '-u', $user, 'perl', $script_get_wg_config;
+sub install_from_script($script, $output_file) {
+    my $script_abs = abs_path(dirname(__FILE__). '/'. $script);
+    my $user = 'sergio';
+    open my $fh, '-|', 'sudo', '-i', '-u', $user, 'perl', $script_abs;
     my $contents = join '', <$fh>;
-    my $output_file = '/etc/wireguard/wg0.conf';
     my $output_exists;
     open $fh, '<', $output_file and ($output_exists = 1);
     my $contents_output_file = '';
     $contents_output_file = join '', <$fh> if $output_exists;
     if ($contents ne $contents_output_file) {
         say 'Writting new file';
+        say "Writting new file for $script -> $output_file";;
+        system 'mkdir', '-p', dirname($output_file);
         open $fh, '>', $output_file;
         print $fh $contents;
-        system 'systemctl', 'restart', 'wg-quick@wg0';
-        return;
+        return 1;
     }
-    say 'Files equal';
+    say "Files equal for $script -> $output_file";;
+}
+
+sub install_if_new_wireguard {
+    system 'systemctl', 'restart', 'wg-quick@wg0' if install_from_script('get_wg_config.pl', '/etc/wireguard/wg5.conf');
+}
+
+sub install_if_new_whitelist {
+    install_from_script('get_whitelist_json.pl', '/etc/geyser-console/whitelist.json');
 }

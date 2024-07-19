@@ -31,6 +31,10 @@ sub MIGRATIONS {
         'ALTER TABLE vpn_users rename column is_protected to is_protected_old;',
         'ALTER TABLE vpn_users add is_protected NOT NULL DEFAULT false;',
         'UPDATE vpn_users set is_protected = is_protected_old;',
+        'CREATE TABLE whitelist_console (
+            id INTEGER PRIMARY KEY,
+            username TEXT NOT NULL UNIQUE
+        );',
     );
 }
 1;

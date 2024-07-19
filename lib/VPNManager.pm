@@ -65,6 +65,7 @@ sub startup ($self) {
     $routes->post('/vpn/user/:id/download')->to('Main#download_file');
     $routes->post('/vpn/user/:id/enable')->to('Main#enable_user');
     $routes->post('/vpn/user/:id/disable')->to('Main#disable_user');
-    # $routes->post('/vpn/save')->to('Main#save_vpn_settings');
+    $routes->post('/whitelist/add')->to('Main#whitelist_add');
+    $routes->post('/whitelist/:id/remove')->to('Main#whitelist_remove');
 }
 1;

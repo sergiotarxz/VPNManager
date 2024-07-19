@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="/style.css"/>
     </head>
     <body class="main">
+        <h2>VPN Users</h2>
         <p><a href="/vpn/create-user">Create new vpn user</a>.</p>
 % if (defined $users && @$users) {
         <ul>
@@ -15,8 +16,25 @@
 %       }
 % }
         </ul>
-        <form action="/vpn/save" method="post">
-            <input type="submit" value="Save VPN Settings"/>
+        <h2>Console whitelist</h2>
+        <h3>Add a user to the console whitelist</h3>
+        <form action="/whitelist/add" method="post">
+            <div>
+                <label for="name">Name</label>
+                <input name="username"/>
+            </div>
+            <input type="submit" value="Submit"/> 
         </form>
+% my $whitelist_users = stash 'whitelist_users';
+% if (defined $whitelist_users && @$whitelist_users) {
+        <h3>List of console users in whitelist</h3>
+        <ul>
+%       for my $user (@$whitelist_users) {
+            <li><%=$user->username%> <form class="inline" method="post" action="/whitelist/<%=$user->id%>/remove">
+                <input type="submit" value="Delete"/> 
+            </form></li>
+%       }
+        </ul>
+% }
     </body>
 </html>

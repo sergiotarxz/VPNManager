@@ -15,7 +15,11 @@ use Path::Tiny;
 sub main($self) {
     my $resultset = VPNManager::Schema->Schema->resultset('VPNUser');
     my @users     = $resultset->search( {} );
+    my $resultset_console = VPNManager::Schema->Schema->resultset('WhitelistConsole');
+    my @whitelist_users = $resultset_console->search({});
+    warn @whitelist_users;
     $self->stash( users => \@users );
+    $self->stash( whitelist_users => \@whitelist_users );
     $self->render( template => 'main/index' );
 }
 
@@ -162,34 +166,20 @@ sub disable_user($self) {
     return $self->redirect_to('/');
 }
 
-#sub save_vpn_settings($self) {
-#    my $out_dir = path(__FILE__)->parent->parent->parent->parent->child('out');
-#    $out_dir->mkpath;
-#    system 'chmod', '700', $out_dir;
-#    my $config     = $self->config;
-#    my $vpn_config = <<"EOF";
-#[Interface]
-#Address = @{[$config->{vpn}{host}]}/@{[$config->{vpn}{submask}]}
-#MTU = @{[$config->{vpn}{mtu}]} 
-#SaveConfig = false
-#ListenPort = @{[$config->{vpnclients}{server_port}]}
-#PrivateKey = @{[$config->{vpn}{privkey}]}
-#EOF
-#    my $resultset = VPNManager::Schema->Schema->resultset('VPNUser');
-#    my @users     = $resultset->search( {} );
-#
-#    for my $user (@users) {
-#        next if !$user->is_enabled;
-#
-#        $vpn_config .= <<"EOF";
-#
-#[Peer]
-#PublicKey = @{[$user->publickey]}
-#AllowedIPs = @{[$user->ip_to_text]}/32
-#Endpoint = @{[$config->{vpn}{endpoint}]}:@{[$config->{vpnclients}{server_port}]}
-#EOF
-#    }
-#    $out_dir->child('wg0.conf')->spew_raw($vpn_config);
-#    return $self->redirect_to('/');
-#}
-1;
+sub whitelist_add($self) {
+    my $resultset = VPNManager::Schema->Schema->resultset('WhitelistConsole');
+    my $username = $self->param('username');
+    eval {
+    $resultset->populate([{username => $username}]);
+    };
+    if ($@) {
+        warn $@;
+    }
+    return $self->redirect_to('/');
+}
+sub whitelist_remove($self) {
+    my $resultset = VPNManager::Schema->Schema->resultset('WhitelistConsole');
+    my $id = $self->param('id');
+    $resultset->search({id => $id})->delete;
+    return $self->redirect_to('/');
+}1;
