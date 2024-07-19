@@ -24,7 +24,7 @@ while (1) {
 
 sub install_from_script($script, $output_file) {
     my $script_abs = abs_path(dirname(__FILE__). '/'. $script);
-    my $user = 'sergio';
+    my $user = 'vpnmanager';
     open my $fh, '-|', 'sudo', '-i', '-u', $user, 'perl', $script_abs;
     my $contents = join '', <$fh>;
     my $output_exists;
