@@ -1,3 +1,4 @@
+% use Encode qw/encode decode/;
 % my $users = stash 'users';
 <html>
     <head>
@@ -9,7 +10,7 @@
 % if (defined $users && @$users) {
         <ul>
 %       for my $user (@$users) {
-            <li>Id: <b><%=$user->id%></b> Name: <b><%=$user->name%></b> Internal IP Address: <b><%=$user->ip_to_text%></b> <a href="/vpn/user/<%=$user->id%>/details">View details</a> 
+            <li>Id: <b><%=$user->id%></b> Name: <b><%=decode 'utf-8', $user->name%></b> Internal IP Address: <b><%=$user->ip_to_text%></b> <a href="/vpn/user/<%=$user->id%>/details">View details</a> 
             <form class="inline" method="post" action="/vpn/user/<%=$user->id%>/<%=$user->is_enabled ? 'disable' : 'enable'%>">
                 <input type="submit" value="<%=$user->is_enabled? 'Disable' : 'Enable'%>"/>
             </form></li>
