@@ -13,7 +13,7 @@ if ($> != 0) {
 
 while (1) {
     eval {
-#        install_if_new_wireguard();
+        install_if_new_wireguard();
         install_if_new_whitelist();
         sleep 15;
     };
