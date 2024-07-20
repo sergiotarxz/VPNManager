@@ -40,6 +40,7 @@ sub install_from_script($script, $output_file) {
         return 1;
     }
     say "Files equal for $script -> $output_file";;
+    return;
 }
 
 sub install_if_new_wireguard {
