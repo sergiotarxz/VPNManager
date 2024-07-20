@@ -43,7 +43,7 @@ sub install_from_script($script, $output_file) {
 }
 
 sub install_if_new_wireguard {
-    system 'systemctl', 'restart', 'wg-quick@wg0' if install_from_script('get_wg_config.pl', '/etc/wireguard/wg5.conf');
+    system 'systemctl', 'restart', 'wg-quick@wg0' if install_from_script('get_wg_config.pl', '/etc/wireguard/wg0.conf');
 }
 
 sub install_if_new_whitelist {
