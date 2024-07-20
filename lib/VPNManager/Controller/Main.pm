@@ -4,6 +4,7 @@ use v5.38.2;
 
 use strict;
 use warnings;
+use Encode qw/decode encode/;
 
 use Crypt::Bcrypt qw/bcrypt_check/;
 use VPNManager::Schema;
@@ -117,7 +118,8 @@ PublicKey = $publickey
 AllowedIPs = @{[$config->{vpnclients}{allowedips}]}
 Endpoint = @{[$config->{vpnclients}{endpoint}]}:@{[$config->{vpnclients}{server_port}]}
 EOF
-    my $filename = $user->name . '-vpn.conf';
+    my $filename = 'wg0.conf';
+
     $self->res->headers->add( 'Content-Type',
         'application/x-download;name=' . $filename );
     $self->res->headers->add( 'Content-Disposition',
