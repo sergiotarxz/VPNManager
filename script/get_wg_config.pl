@@ -6,7 +6,7 @@ use warnings;
 
 use Moo;
 use File::Basename qw/dirname/;
-use lib dirname(dirname(__FILE__)).'/lib';
+use lib dirname( dirname(__FILE__) ) . '/lib';
 use VPNManager::Schema;
 
 sub get_vpn_settings($self) {
@@ -21,7 +21,7 @@ ListenPort = @{[$config->{vpnclients}{server_port}]}
 PrivateKey = @{[$config->{vpn}{privkey}]}
 EOF
     my $resultset = VPNManager::Schema->Schema->resultset('VPNUser');
-    my @users     = $resultset->search( {} );
+    my @users     = $resultset->search( { -bool => 'is_enabled' } );
 
     for my $user (@users) {
         next if !$user->is_enabled;
