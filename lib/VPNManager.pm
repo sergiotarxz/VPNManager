@@ -24,18 +24,18 @@ sub startup ($self) {
 
     # Normal route to controller
     my $routes = $r->under(
-        '/',
+        '/app',
         sub {
             my $c              = shift;
             my $redirect_login = sub {
                 my $c   = shift;
-                my $url = Mojo::URL->new('/login');
+                my $url = Mojo::URL->new('/app/login');
                 $url->query( redirect_to => $c->url_for );
                 $c->redirect_to($url);
                 return 0;
             };
 
-            if ( $c->url_for->path =~ /^\/login\/?$/ ) {
+            if ( $c->url_for->path =~ /^\/app\/login\/?$/ ) {
                 return 1;
             }
             if ( !defined $c->session->{user} ) {

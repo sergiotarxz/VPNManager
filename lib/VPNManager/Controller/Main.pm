@@ -43,7 +43,7 @@ sub login_post($self) {
         return $self->_invalid_login;
     }
     $self->session->{user} = $username;
-    return $self->redirect_to('/');
+    return $self->redirect_to('/app');
 }
 
 sub _invalid_login($self) {
@@ -80,7 +80,7 @@ sub create_vpn_user_post($self) {
     $new_user->insert;
     $new_user = $new_user->get_from_storage;
     my $id  = $new_user->id;
-    my $url = Mojo::URL->new("/vpn/user/$id/details");
+    my $url = Mojo::URL->new("/app/vpn/user/$id/details");
     return $self->redirect_to($url);
 }
 
@@ -152,7 +152,7 @@ sub enable_user($self) {
         );
     }
     $user->update( { is_enabled => 1 } );
-    return $self->redirect_to('/');
+    return $self->redirect_to('/app');
 }
 
 sub disable_user($self) {
@@ -165,7 +165,7 @@ sub disable_user($self) {
     return $self->render( text => 'This user is protected', status => 400 )
       if $user->is_protected;
     $user->update( { is_enabled => 0 } );
-    return $self->redirect_to('/');
+    return $self->redirect_to('/app');
 }
 
 sub whitelist_add($self) {
@@ -177,11 +177,11 @@ sub whitelist_add($self) {
     if ($@) {
         warn $@;
     }
-    return $self->redirect_to('/');
+    return $self->redirect_to('/app');
 }
 sub whitelist_remove($self) {
     my $resultset = VPNManager::Schema->Schema->resultset('WhitelistConsole');
     my $id = $self->param('id');
     $resultset->search({id => $id})->delete;
-    return $self->redirect_to('/');
+    return $self->redirect_to('/app');
 }1;

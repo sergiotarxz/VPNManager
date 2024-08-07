@@ -3,7 +3,7 @@
         <link rel="stylesheet" href="/style.css"/>
     </head>
     <body class="create-user">
-        <form action="/vpn/create-user" method="post"> 
+        <form action="/app/vpn/create-user" method="post"> 
             <div>
                 <label for="name">Name</label>
                 <input name="name"/>     

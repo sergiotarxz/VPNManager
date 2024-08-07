@@ -6,12 +6,12 @@
     </head>
     <body class="main">
         <h2>VPN Users</h2>
-        <p><a href="/vpn/create-user">Create new vpn user</a>.</p>
+        <p><a href="/app/vpn/create-user">Create new vpn user</a>.</p>
 % if (defined $users && @$users) {
         <ul>
 %       for my $user (@$users) {
-            <li>Id: <b><%=$user->id%></b> Name: <b><%=decode 'utf-8', $user->name%></b> Internal IP Address: <b><%=$user->ip_to_text%></b> <a href="/vpn/user/<%=$user->id%>/details">View details</a> 
-            <form class="inline" method="post" action="/vpn/user/<%=$user->id%>/<%=$user->is_enabled ? 'disable' : 'enable'%>">
+            <li>Id: <b><%=$user->id%></b> Name: <b><%=decode 'utf-8', $user->name%></b> Internal IP Address: <b><%=$user->ip_to_text%></b> <a href="/app/vpn/user/<%=$user->id%>/details">View details</a> 
+            <form class="inline" method="post" action="/app/vpn/user/<%=$user->id%>/<%=$user->is_enabled ? 'disable' : 'enable'%>">
                 <input type="submit" value="<%=$user->is_enabled? 'Disable' : 'Enable'%>"/>
             </form></li>
 %       }

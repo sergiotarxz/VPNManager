@@ -5,6 +5,6 @@
         <link rel="stylesheet" href="/style.css"/>
     </head>
     <body>
-        <a href="/vpn/user/<%=$user->id%>/download" download="wg0.conf">Dowload vpn file</a>
+        <a href="/app/vpn/user/<%=$user->id%>/download" download="wg0.conf">Dowload vpn file</a>
     </body>
 </html>
