@@ -2,7 +2,7 @@
 % my $users = stash 'users';
 <html>
     <head>
-        <link rel="stylesheet" href="/style.css"/>
+        <link rel="stylesheet" href="/css/style.css"/>
     </head>
     <body class="main">
         <h2>VPN Users</h2>

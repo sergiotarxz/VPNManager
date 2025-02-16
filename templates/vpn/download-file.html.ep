@@ -2,7 +2,7 @@
 % my $file = stash 'vpn_file';
 <html>
     <head>
-        <link rel="stylesheet" href="/style.css"/>
+        <link rel="stylesheet" href="/css/style.css"/>
     </head>
     <body>
         <a href="/app/vpn/user/<%=$user->id%>/download" download="wg0.conf">Dowload vpn file</a>
