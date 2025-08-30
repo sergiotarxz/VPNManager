@@ -13,7 +13,8 @@ use Path::Tiny;
 sub startup ($self) {
 
     # Load configuration from config file
-    system 'chmod', '600', path(__FILE__)->parent->parent->child('v_p_n_manager.yml');
+    system 'chmod', '600',
+      path(__FILE__)->parent->parent->child('v_p_n_manager.yml');
     my $config = $self->plugin('NotYAMLConfig');
 
     # Configure the application
@@ -23,11 +24,6 @@ sub startup ($self) {
     my $r = $self->routes;
 
     # Normal route to controller
-    $r->get('/*extra', sub {
-        my $c = shift;
-        my $extra = $c->param('extra');
-        return $c->redirect_to('/app/'.$extra);
-    });
     my $routes = $r->under(
         '/app',
         sub {
@@ -59,6 +55,14 @@ sub startup ($self) {
                 return $redirect_login->($c);
             }
             return 1;
+        }
+    );
+    $r->get(
+        '/*extra',
+        sub {
+            my $c     = shift;
+            my $extra = $c->param('extra');
+            return $c->redirect_to( '/app/' . $extra );
         }
     );
     $routes->get('/')->to('Main#main');
