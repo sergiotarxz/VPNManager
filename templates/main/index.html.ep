@@ -19,7 +19,7 @@
         </ul>
         <h2>Console whitelist</h2>
         <h3>Add a user to the console whitelist</h3>
-        <form action="/whitelist/add" method="post">
+        <form action="/app/whitelist/add" method="post">
             <div>
                 <label for="name">Name</label>
                 <input name="username"/>
