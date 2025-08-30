@@ -23,6 +23,11 @@ sub startup ($self) {
     my $r = $self->routes;
 
     # Normal route to controller
+    $r->get('/*extra', sub {
+        my $c = shift;
+        my $extra = $c->param('extra');
+        return $c->redirect_to('/app/'.$extra);
+    });
     my $routes = $r->under(
         '/app',
         sub {
