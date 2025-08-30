@@ -57,6 +57,14 @@ sub startup ($self) {
             return 1;
         }
     );
+    $r->post(
+        '/*extra',
+        sub {
+            my $c     = shift;
+            my $extra = $c->param('extra');
+            return $c->redirect_to( '/app/' . $extra );
+        }
+    );
     $r->get(
         '/*extra',
         sub {
