@@ -31,7 +31,7 @@
         <h3>List of console users in whitelist</h3>
         <ul>
 %       for my $user (@$whitelist_users) {
-            <li><%=$user->username%> <form class="inline" method="post" action="/whitelist/<%=$user->id%>/remove">
+            <li><%=$user->username%> <form class="inline" method="post" action="/app/whitelist/<%=$user->id%>/remove">
                 <input type="submit" value="Delete"/> 
             </form></li>
 %       }
