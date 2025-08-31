@@ -57,14 +57,13 @@ sub startup ($self) {
             return 1;
         }
     );
-    $r->get(
-        '*extra',
-        sub {
-            my $c     = shift;
-            my $extra = $c->param('extra');
-            return $c->redirect_to( '/app/' . $extra );
-        }
-    );
+    my $root = sub {
+        my $c     = shift;
+        my $extra = $c->param('extra') // '';
+        return $c->redirect_to( '/app/' . $extra );
+    };
+    $r->get( '/',       $root, );
+    $r->get( '/*extra', $root, );
     $routes->get('/')->to('Main#main');
     $routes->get('/login')->to('Main#login');
     $routes->post('/login')->to('Main#login_post');
