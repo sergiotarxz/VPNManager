@@ -31,7 +31,6 @@ EOF
 [Peer]
 PublicKey = @{[$user->publickey]}
 AllowedIPs = @{[$user->ip_to_text]}/32
-Endpoint = @{[$config->{vpn}{endpoint}]}:@{[$config->{vpnclients}{server_port}]}
 EOF
     }
     say $vpn_config;
