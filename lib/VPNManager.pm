@@ -58,7 +58,7 @@ sub startup ($self) {
         }
     );
     $r->get(
-        '/*extra',
+        '*extra',
         sub {
             my $c     = shift;
             my $extra = $c->param('extra');
