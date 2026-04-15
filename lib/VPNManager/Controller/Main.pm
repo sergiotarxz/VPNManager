@@ -16,11 +16,7 @@ use Path::Tiny;
 sub main($self) {
     my $resultset = VPNManager::Schema->Schema->resultset('VPNUser');
     my @users     = $resultset->search( {} );
-    my $resultset_console = VPNManager::Schema->Schema->resultset('WhitelistConsole');
-    my @whitelist_users = $resultset_console->search({});
-    warn @whitelist_users;
     $self->stash( users => \@users );
-    $self->stash( whitelist_users => \@whitelist_users );
     $self->render( template => 'main/index' );
 }
 
@@ -167,21 +163,4 @@ sub disable_user($self) {
     $user->update( { is_enabled => 0 } );
     return $self->redirect_to('/app');
 }
-
-sub whitelist_add($self) {
-    my $resultset = VPNManager::Schema->Schema->resultset('WhitelistConsole');
-    my $username = $self->param('username');
-    eval {
-    $resultset->populate([{username => $username}]);
-    };
-    if ($@) {
-        warn $@;
-    }
-    return $self->redirect_to('/app');
-}
-sub whitelist_remove($self) {
-    my $resultset = VPNManager::Schema->Schema->resultset('WhitelistConsole');
-    my $id = $self->param('id');
-    $resultset->search({id => $id})->delete;
-    return $self->redirect_to('/app');
-}1;
+1;

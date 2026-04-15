@@ -14,7 +14,6 @@ if ($> != 0) {
 while (1) {
     eval {
         install_if_new_wireguard();
-        install_if_new_whitelist();
         sleep 15;
     };
     if ($@) {
@@ -45,8 +44,4 @@ sub install_from_script($script, $output_file) {
 
 sub install_if_new_wireguard {
     system 'systemctl', 'reload', 'wg-quick@wg0' if install_from_script('get_wg_config.pl', '/etc/wireguard/wg0.conf');
-}
-
-sub install_if_new_whitelist {
-    install_from_script('get_whitelist_json.pl', '/etc/geyser-console/whitelist.json');
 }
